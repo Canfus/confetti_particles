@@ -30,7 +30,15 @@ const PARTICLE_SPEED = 2;
  * @type {number}
  */
 const EMISSION_RATE = 10;
+/**
+ * center of screen by x
+ * @type {number}
+ */
 const MIDDLE_X = canvas.width / 2;
+/**
+ * center of screen by y
+ * @type {number}
+ */
 const MIDDLE_Y = canvas.height / 2;
 
 /**
@@ -38,7 +46,7 @@ const MIDDLE_Y = canvas.height / 2;
  */
 let PARTICLES = [];
 /**
- *
+ * emitters that will generate particles
  * @type {Emitter[]}
  */
 const EMITTERS = [
@@ -46,22 +54,29 @@ const EMITTERS = [
     new Vector(MIDDLE_X, MIDDLE_Y),
     Vector.fromAngle(0, PARTICLE_SPEED),
     Math.PI / 32
-  )
+  ),
 ];
 
+/**
+ * function to create particles
+ */
 function addParticles() {
   if (PARTICLES.length > PARTICLE_COUNT) {
     return;
   }
 
-  for (let i = 0; i < EMITTERS.length; i += 1) {
-    for (let j = 0; j < EMISSION_RATE; j += 1) {
-      const emitter = EMITTERS[i].emit();
-      PARTICLES.push(emitter);
+  for (const emitter of EMITTERS) {
+    for (let i = 0; i < EMISSION_RATE; i += 1) {
+      PARTICLES.push(emitter.emit());
     }
   }
 }
 
+/**
+ * function to move particles
+ * @param boundsX
+ * @param boundsY
+ */
 function plotParticles(boundsX, boundsY) {
   const currentParticles = [];
 
@@ -79,6 +94,9 @@ function plotParticles(boundsX, boundsY) {
   PARTICLES = currentParticles;
 }
 
+/**
+ * function to draw particles
+ */
 function drawParticles() {
   for (const particle of PARTICLES) {
     const pos = particle.position;
