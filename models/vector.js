@@ -12,8 +12,12 @@ export class Vector {
         this.y += vector.y;
     }
 
+    private norm(x: number, y: number) {
+        return x * x + y * y;
+    }
+
     getMagnitude() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.sqrt(this.norm(this.x, this.y));
     }
 
     getAngle() {
